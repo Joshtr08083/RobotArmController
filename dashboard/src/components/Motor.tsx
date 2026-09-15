@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect} from "react"
 
 import Slider from "./Slider"
 import Toggle from "./Toggle"

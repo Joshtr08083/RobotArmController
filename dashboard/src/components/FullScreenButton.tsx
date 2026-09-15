@@ -34,6 +34,8 @@ export const FullscreenButton: React.FC = () => {
     <button
       onClick={toggleFullscreen}
       className="fullScreenButton"
+      aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+      title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
     >
       ⛶
     </button>

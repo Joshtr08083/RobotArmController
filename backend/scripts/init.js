@@ -4,7 +4,7 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS cache(
   id TEXT PRIMARY KEY,
   value INTEGER,
-  enabled BOOLEAN
+  enabled INTEGER
 ) STRICT
 `);
 

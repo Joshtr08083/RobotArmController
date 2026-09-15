@@ -48,7 +48,7 @@ const Motor = ({id, lowBound, highBound, start, incoming, onChange, initial} : P
     useEffect(() => {
         if (initial !== undefined) {
             if (initial?.value !== undefined) setPos(initial.value);
-            if (initial?.enabled !== undefined) setIsEnabled(initial.enabled);
+            if (initial?.enabled !== undefined) setIsEnabled((initial.enabled === 1));
         }
     }, [initial])
 

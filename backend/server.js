@@ -2,10 +2,16 @@ import db from "./lib/db.js"
 import express from "express"
 import { WebSocketServer } from 'ws';
 import cors from "cors";
+import path from "node:path"
+import { fileURLToPath } from 'node:url';
 
-import { serialPrint } from "./lib/serial.js";
+import { serialPrint, serialOpen } from "./lib/serial.js";
 process.loadEnvFile(); 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+serialOpen();
 const PORT = process.env.PORT;
 
 const MOTORS = {
@@ -54,6 +60,7 @@ const getAllCache = db.prepare(`SELECT id, value, enabled FROM cache`);
 
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'dashboard-build')));
 
 app.get("/state", (req, res) => {
     const rows = getAllCache.all();
@@ -74,8 +81,8 @@ app.get("/state", (req, res) => {
 });
 
 const server = app.listen(PORT, () => {
-    console.log(`Websocket running at: ws://10.0.0.1:${PORT}${process.env.WS_PATH}`);
-    console.log(`HTTP state endpoint at: http://10.0.0.1:${PORT}/state`);
+    console.log(`Websocket running at: ws://127.0.0.1:${PORT}${process.env.WS_PATH}`);
+    console.log(`HTTP state endpoint at: http://127.0.0.1:${PORT}/state`);
 })
 
 const wss = new WebSocketServer({ 
@@ -157,7 +164,7 @@ async function handleMessage(msg) {
                     return;
                 }
                 
-                updateDBEnabled.run(key, (value === "enable"));
+                updateDBEnabled.run(key, (value === "enable")? 1 : 0);
                 console.log(`  - Logged ${value} ${key} in database`)
 
                 const jsonPayload = {"tgt": key, [value]: true}

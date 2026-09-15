@@ -18,6 +18,7 @@
     "ws": "^8.21.3"
   },
   "allowScripts": {
-    "sqlite3@6.0.1": true
+    "sqlite3@6.0.1": true,
+    "@serialport/bindings-cpp@13.0.0": true
   }
 }

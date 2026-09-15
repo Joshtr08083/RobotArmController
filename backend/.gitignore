@@ -41,3 +41,4 @@ Thumbs.db
 .eslintcache
 .stylelintcache
 node_repl_history
+db.sqlite

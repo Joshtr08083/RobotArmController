@@ -11,6 +11,7 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
   build: {
-    outDir: '../backend/dashboard-build'
+    outDir: '../backend/dashboard-build',
+    emptyOutDir: true
   }
 })

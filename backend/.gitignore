@@ -42,3 +42,5 @@ Thumbs.db
 .stylelintcache
 node_repl_history
 db.sqlite
+
+dashboard-build/

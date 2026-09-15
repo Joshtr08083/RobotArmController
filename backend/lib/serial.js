@@ -1,7 +1,7 @@
 import { SerialPort } from 'serialport';
 process.loadEnvFile(); 
 
-const SERIAL_ENABLE = process.env.SERIAL_ENABLE;
+const SERIAL_ENABLE = (process.env.SERIAL_ENABLE === "1");
 
 export const port = new SerialPort({
   path: process.env.SERIAL_PORT,          
@@ -10,7 +10,7 @@ export const port = new SerialPort({
 });
 
 export function serialOpen() {
-  if (SERIAL_ENABLE === "0") { return; }
+  if (!SERIAL_ENABLE) { return; }
 
   port.open((err) => {
     if (err) return console.error('Failed to open:', err.message);

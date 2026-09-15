@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 
 const MOTORS = {
     "base": {
-        "interval": 5,
+        "interval": 2,
         "steps": 1
     },
     "shoulder": {
@@ -18,19 +18,19 @@ const MOTORS = {
         "steps": 1
     },
     "elbow": {
-        "interval": 5,
+        "interval": 10,
         "steps": 1
     },
     "wristPitch": {
-        "interval": 5,
+        "interval": 10,
         "steps": 1
     },
     "wristRoll": {
-        "interval": 5,
+        "interval": 10,
         "steps": 1
     },
     "claw": {
-        "interval": 5,
+        "interval": 2,
         "steps": 1
     }
 }
@@ -107,20 +107,25 @@ wss.on('connection', (ws) => {
   });
 });
 
+let lastProcess = 0;
+
 async function processQueue() {
   if (processing) return;
   processing = true;
   while (queue.length) {
+
     const msg = queue.shift();
     try {
-      await handleMessage(msg);
+    await handleMessage(msg);
 
     } catch (err) {
-      console.error('failed to process message', err);
+    console.error('failed to process message', err);
     }
+    
   }
   processing = false;
 }
+
 
 async function handleMessage(msg) {
     const jsonData = JSON.parse(msg);
@@ -143,7 +148,7 @@ async function handleMessage(msg) {
                     "int": motor["interval"],
                     "stp": motor["steps"]
                 }
-                const payload = JSON.stringify(jsonPayload)
+                const payload = JSON.stringify(jsonPayload);
                 serialPrint(payload);
 
             } else if (typeof value === "string") { // enable/disable {"key": "enable"}
@@ -155,7 +160,7 @@ async function handleMessage(msg) {
                 updateDBEnabled.run(key, (value === "enable"));
                 console.log(`  - Logged ${value} ${key} in database`)
 
-                const jsonPayload = {"id": key, [value]: true}
+                const jsonPayload = {"tgt": key, [value]: true}
                 const payload = JSON.stringify(jsonPayload)
                 serialPrint(payload);
 

@@ -3,7 +3,7 @@ process.loadEnvFile();
 
 export const port = new SerialPort({
   path: process.env.SERIAL_PORT,          
-  baudRate: 15200,        
+  baudRate: 115200,        
   autoOpen: false,       
 });
 
@@ -23,8 +23,10 @@ export function serialPrint(message) {
   const payload = `${message}\n`;
   port.write(payload, (err) => {
     if (err) console.error('sendData failed:', err.message);
+    port.drain((err) => {
+      if (err) console.error('drain failed:', err.message);
+    });
   });
 
-  console.log(`  - Sent to Serial: ${message}`)
-  console.log(Buffer.from(payload).toString('hex'));
+  console.log(`  - Sent to Serial: ${message}`);
 }

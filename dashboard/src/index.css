@@ -1,0 +1,23 @@
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --text: #e9e9e9;
+  --text-h: #ffffff;
+  --bg: #18191B;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #43894c;
+  --accent-bg: rgba(101, 255, 59, 0.1);
+  --accent-border: rgba(59, 255, 82, 0.5);
+
+  color: var(--text);
+}
+
+:root {
+  background-color: var(--bg);
+}
